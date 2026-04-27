@@ -1,0 +1,11 @@
+{{ $config := joinPath .chezmoi.homeDir ".config/mise/config.toml" -}}
+#!/bin/bash
+
+# {{ include $config | sha256sum }}
+
+echo "Checking for new mise runtimes..."
+if command -v mise &> /dev/null; then
+    ~/.local/share/mise/bin/mise install -y
+else
+    echo "mise is not installed. Skipping..."
+fi
