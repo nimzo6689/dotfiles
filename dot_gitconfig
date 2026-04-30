@@ -11,6 +11,12 @@
     format = ssh
 [commit]
     gpgsign = true
+[merge]
+    conflictStyle = zdiff3
+[rebase]
+    autoStash = true
+[fetch]
+    prune = true
 [pull]
     rebase = true
 [push]
@@ -20,4 +26,8 @@
 [diff]
     algorithm = histogram
 [alias]
+    st = status -sb
+    diff = less -F -X
     graph = log --graph --date=format:'%Y-%m-%d %H:%M' --pretty=format:'%C(auto)%h%d %C(reset)%s %C(magenta)[%ad] %C(cyan)[%an]%C(reset)'
+[help]
+    autocorrect = 30
