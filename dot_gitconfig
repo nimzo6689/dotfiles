@@ -1,5 +1,23 @@
 [user]
-        name = nimzo6689
-        email = 14356595+nimzo6689@users.noreply.github.com
+    name = nimzo6689
+    email = 14356595+nimzo6689@users.noreply.github.com
+    signingkey = ~/.ssh/id_ed25519.pub
 [init]
-        defaultBranch = main
+    defaultBranch = main
+[core]
+    editor = vim
+    quotepath = false
+[gpg]
+    format = ssh
+[commit]
+    gpgsign = true
+[pull]
+    rebase = true
+[push]
+    autoSetupRemote = true
+[color]
+    ui = auto
+[diff]
+    algorithm = histogram
+[alias]
+    graph = log --graph --date=format:'%Y-%m-%d %H:%M' --pretty=format:'%C(auto)%h%d %C(reset)%s %C(magenta)[%ad] %C(cyan)[%an]%C(reset)'
