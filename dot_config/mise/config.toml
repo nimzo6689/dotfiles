@@ -1,6 +1,5 @@
 [tools]
 "cargo:tokei" = "latest"
-chezmoi = "latest"
 fzf = "latest"
 go = "latest"
 node = "24"
