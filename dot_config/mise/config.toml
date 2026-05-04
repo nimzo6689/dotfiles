@@ -3,6 +3,7 @@
 fzf = "latest"
 go = "latest"
 node = "24"
+oh-my-posh = "latest"
 ripgrep = "latest"
 rust = "latest"
 zoxide = "latest"
