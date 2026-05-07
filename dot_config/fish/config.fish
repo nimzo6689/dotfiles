@@ -13,5 +13,5 @@ end
 
 /home/nimzo/.local/bin/mise activate fish | source # added by https://mise.run/fish
 
-eval (oh-my-posh init fish --config ~/.cache/oh-my-posh/themes/emodipt.omp.json)
+eval (oh-my-posh init fish --config emodipt)
 zoxide init fish | source
