@@ -2,8 +2,13 @@
 "cargo:tokei" = "latest"
 fzf = "latest"
 go = "latest"
-node = "24"
+node = "latest"
 oh-my-posh = "latest"
 ripgrep = "latest"
 rust = "latest"
 zoxide = "latest"
+oh-my-posh@latest
+chezmoi@latest
+podman@latest
+aws-sam-cli@latest
+bitwarden@latest
