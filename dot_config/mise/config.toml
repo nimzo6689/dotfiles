@@ -12,6 +12,3 @@ podman = "latest"
 ripgrep = "latest"
 rust = "latest"
 zoxide = "latest"
-
-[settings]
-trust_all_config_files = true
