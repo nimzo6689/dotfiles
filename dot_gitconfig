@@ -32,3 +32,14 @@
     graph = log --graph --date=format:'%Y-%m-%d %H:%M' --pretty=format:'%C(auto)%h%d %C(reset)%s %C(magenta)[%ad] %C(cyan)[%an]%C(reset)'
 [help]
     autocorrect = 30
+[hook "scan-credentials"]
+	event = pre-commit
+	command = ~/.config/git/hooks/pre-commit-scan-credentials.sh
+
+[hook "check-large-files"]
+	event = pre-commit
+	command = ~/.config/git/hooks/pre-commit-check-large-files.sh
+
+[hook "ensure-hook-installed"]
+	event = pre-commit
+	command = ~/.config/git/hooks/pre-commit-ensure-hook-installed.sh
