@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+set -euo pipefail
 
 echo "Checking for new mise runtimes..."
 if test -f ~/.local/bin/mise &> /dev/null; then
