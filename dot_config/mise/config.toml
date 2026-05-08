@@ -1,13 +1,13 @@
 [tools]
+aws-sam-cli = "latest"
 "cargo:tokei" = "latest"
+chezmoi = "latest"
 fzf = "latest"
 go = "latest"
+jq = "latest"
 node = "latest"
 oh-my-posh = "latest"
+podman = "latest"
 ripgrep = "latest"
 rust = "latest"
 zoxide = "latest"
-oh-my-posh@latest
-chezmoi@latest
-podman@latest
-aws-sam-cli@latest
