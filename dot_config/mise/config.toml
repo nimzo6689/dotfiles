@@ -2,6 +2,7 @@
 aws-sam-cli = "latest"
 "cargo:tokei" = "latest"
 chezmoi = "latest"
+eza = "latest"
 fzf = "latest"
 gitleaks = "latest"
 go = "latest"
