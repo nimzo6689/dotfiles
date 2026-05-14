@@ -2,34 +2,6 @@ set -g fish_greeting ""
 set -x EDITOR code
 
 # --------------------------------------
-# Functions
-# --------------------------------------
-function mkcd
-    if test (count $argv) -gt 0
-        mkdir -p -- $argv[1]
-        and cd $argv[1]
-    else
-        echo "Usage: mkcd <directory>"
-    end
-end
-
-# --------------------------------------
-# Aliases
-# --------------------------------------
-if type -q eza
-    alias ls='eza --icons'
-    alias ll='eza -l --icons --git'
-    alias lla='eza -la --icons --git'
-end
-
-# Git
-alias g='git'
-alias gst='git status'
-# Mise
-alias u='mise use'
-alias ug='mise use -g'
-
-# --------------------------------------
 # SSH Agent
 # --------------------------------------
 # すでに実行中の agent があれば再利用し、なければ起動する
@@ -59,4 +31,36 @@ if status is-interactive
     ~/.local/bin/mise activate fish --shims | source
     oh-my-posh init fish --config emodipt | source
     zoxide init fish | source
+end
+
+# --------------------------------------
+# Functions
+# --------------------------------------
+function mkcd
+    if test (count $argv) -gt 0
+        mkdir -p -- $argv[1]
+        and cd $argv[1]
+    else
+        echo "Usage: mkcd <directory>"
+    end
+end
+
+# --------------------------------------
+# Aliases
+# --------------------------------------
+# Git
+alias g='git'
+alias gst='git status'
+
+# Mise
+if type -q mise
+    alias mu='mise use'
+    alias mug='mise use -g'
+end
+
+# eza
+if type -q eza
+    alias ls='eza --icons'
+    alias ll='eza -l --icons --git'
+    alias lla='eza -la --icons --git'
 end
