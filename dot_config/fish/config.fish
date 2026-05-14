@@ -19,10 +19,15 @@ end
 if type -q eza
     alias ls='eza --icons'
     alias ll='eza -l --icons --git'
+    alias lla='eza -la --icons --git'
 end
 
+# Git
 alias g='git'
 alias gst='git status'
+# Mise
+alias u='mise use'
+alias ug='mise use -g'
 
 # --------------------------------------
 # SSH Agent
@@ -51,7 +56,7 @@ if status is-interactive
     end
 
     # 既存のツール初期化をここにまとめる
-    ~/.local/bin/mise activate fish | source
+    ~/.local/bin/mise activate fish --shims | source
     oh-my-posh init fish --config emodipt | source
     zoxide init fish | source
 end
