@@ -28,7 +28,7 @@ if status is-interactive
     end
 
     # 既存のツール初期化をここにまとめる
-    ~/.local/bin/mise activate fish --shims | source
+    mise activate fish --shims | source
     oh-my-posh init fish --config emodipt | source
     zoxide init fish | source
 end
