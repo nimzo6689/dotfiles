@@ -14,3 +14,131 @@ ripgrep = "latest"
 rust = "latest"
 usage = "latest"
 zoxide = "latest"
+
+[vars]
+sudoers_file='/etc/sudoers.d/99-$USER-nopasswd'
+
+[tasks.setup]
+description = 'Setup'
+depends = [
+    "setup:*",
+]
+
+[tasks."disable-sudo-password"]
+description = 'パスワードなし sudo の設定'
+hide = true
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [ ! -f "{{vars.sudoers_file}}" ]; then
+    echo "Configuring passwordless sudo..."
+    echo "$USER ALL=(ALL) NOPASSWD: ALL" | sudo tee "{{vars.sudoers_file}}" > /dev/null
+    sudo chmod 0440 "{{vars.sudoers_file}}"
+    sudo chown root:root "{{vars.sudoers_file}}"
+    sudo visudo -cf "{{vars.sudoers_file}}"
+fi
+'''
+
+[tasks."enable-sudo-password"]
+description = 'パスワードあり sudo の設定'
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [ -f "{{vars.sudoers_file}}" ]; then
+    echo "Configuring sudo with password..."
+    rm -f "{{vars.sudoers_file}}"
+fi
+'''
+
+[tasks."setup:apt-packages"]
+description = 'APT パッケージのインストール'
+hide = true
+depends = ["disable-sudo-password"]
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+
+sudo apt update
+sudo apt upgrade -y
+sudo apt autoremove -y
+sudo apt autoclean -y
+
+sudo apt install -y \
+    software-properties-common \
+    gnupg2 \
+    build-essential \
+    unzip \
+    slirp4netns \
+    fuse-overlayfs \
+    uidmap
+
+# ------------------------------------
+# Git を最新版に更新
+# ------------------------------------
+sudo add-apt-repository -y ppa:git-core/ppa
+sudo apt update
+sudo apt install -y git
+
+# ------------------------------------
+# Fish Shell をインストール
+# ------------------------------------
+sudo add-apt-repository -y ppa:fish-shell/release-4
+sudo apt update
+sudo apt install -y fish
+
+# ログインシェルを fish に変更
+if [ "$SHELL" != "$(command -v fish)" ]; then
+    command -v fish | sudo tee -a /etc/shells
+    sudo chsh -s "$(command -v fish)" $USER
+fi
+'''
+
+[tasks."setup:snap-packages"]
+description = 'Snap パッケージのインストール'
+hide = true
+depends = ["disable-sudo-password"]
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! command -v aws >/dev/null 2>&1; then
+    sudo snap install aws-cli --classic
+fi
+'''
+
+[tasks."setup:mise-packages"]
+description = 'mise パッケージのインストール'
+hide = true
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+
+mise install -y
+'''
+
+[tasks."setup:vscode-extensions"]
+description = ' (vscode) VS Code 拡張機能のインストール'
+hide = true
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+
+if command -v code >/dev/null 2>&1; then
+    EXTENSIONS=(
+        "editorconfig.editorconfig"
+        "esbenp.prettier-vscode"
+        "mhutchie.git-graph"
+        "ryu1kn.partial-diff"
+    )
+    INSTALLED_EXTS=$(code --list-extensions)
+    for ext in "${EXTENSIONS[@]}"; do
+        if ! echo "$INSTALLED_EXTS" | grep -qi "^$ext$"; then
+            code --install-extension "$ext" --force
+        fi
+    done
+else
+    echo "code command が見つからないため、VS Code 拡張機能のインストールをスキップします。"
+fi
+'''
