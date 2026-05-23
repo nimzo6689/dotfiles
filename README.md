@@ -16,8 +16,9 @@ if ! command -v mise >/dev/null 2>&1; then
     sudo add-apt-repository -y ppa:jdxcode/mise
     sudo apt update -y
     sudo apt install -y mise
-    eval "$(mise activate bash --shims)"
 fi
+
+eval "$(mise activate bash --shims)"
 
 # chezmoi のセットアップ
 mise use -g chezmoi@latest
