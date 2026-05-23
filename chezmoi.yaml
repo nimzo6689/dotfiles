@@ -1,0 +1,2 @@
+data:
+  sudoers_file: "/etc/sudoers.d/99-{{ .chezmoi.username }}-nopasswd"
