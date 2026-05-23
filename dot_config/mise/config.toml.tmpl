@@ -45,7 +45,7 @@ set -euo pipefail
 
 if [ -f "{{ .sudoers_file }}" ]; then
     echo "Configuring sudo with password..."
-    rm -f "{{ .sudoers_file }}"
+    sudo rm -f "{{ .sudoers_file }}"
 fi
 '''
 
