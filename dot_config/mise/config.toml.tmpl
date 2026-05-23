@@ -15,9 +15,6 @@ rust = "latest"
 usage = "latest"
 zoxide = "latest"
 
-[vars]
-sudoers_file='/etc/sudoers.d/99-{{ .chezmoi.username }}-nopasswd'
-
 [tasks."setup-wsl"]
 description = 'WSL 環境のセットアップ'
 depends = [
@@ -31,12 +28,12 @@ run = '''
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [ ! -f "{{vars.sudoers_file}}" ]; then
+if [ ! -f "{{ .sudoers_file }}" ]; then
     echo "Configuring passwordless sudo..."
-    echo "$USER ALL=(ALL) NOPASSWD: ALL" | sudo tee "{{vars.sudoers_file}}" > /dev/null
-    sudo chmod 0440 "{{vars.sudoers_file}}"
-    sudo chown root:root "{{vars.sudoers_file}}"
-    sudo visudo -cf "{{vars.sudoers_file}}"
+    echo "$USER ALL=(ALL) NOPASSWD: ALL" | sudo tee "{{ .sudoers_file }}" > /dev/null
+    sudo chmod 0440 "{{ .sudoers_file }}"
+    sudo chown root:root "{{ .sudoers_file }}"
+    sudo visudo -cf "{{ .sudoers_file }}"
 fi
 '''
 
@@ -46,9 +43,9 @@ run = '''
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [ -f "{{vars.sudoers_file}}" ]; then
+if [ -f "{{ .sudoers_file }}" ]; then
     echo "Configuring sudo with password..."
-    rm -f "{{vars.sudoers_file}}"
+    rm -f "{{ .sudoers_file }}"
 fi
 '''
 
