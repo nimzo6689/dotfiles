@@ -25,6 +25,6 @@ mise use -g chezmoi@latest
 chezmoi init --apply --force "$GITHUB_USERNAME"
 
 # 各ツールのセットアップ
-mise run setup || true
+mise run setup-wsl || true
 mise run enable-sudo-password
 ```
