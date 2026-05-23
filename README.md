@@ -11,6 +11,20 @@ Windows 側に以下のスクリプトを配置し、 WSL 上で実行してく�
 export GITHUB_TOKEN="YOUR_GITHUB_TOKEN"
 GITHUB_USERNAME="YOUR_GITHUB_USERNAME"
 
+# apt パッケージのセットアップ
+sudo apt update -y
+sudo apt upgrade -y
+sudo apt autoremove -y
+sudo apt autoclean -y
+sudo apt install -y \
+    software-properties-common \
+    gnupg2 \
+    build-essential \
+    unzip \
+    slirp4netns \
+    fuse-overlayfs \
+    uidmap
+
 # mise のセットアップ
 if ! command -v mise >/dev/null 2>&1; then
     sudo add-apt-repository -y ppa:jdxcode/mise
