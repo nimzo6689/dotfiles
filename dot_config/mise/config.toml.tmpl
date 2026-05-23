@@ -16,12 +16,12 @@ usage = "latest"
 zoxide = "latest"
 
 [vars]
-sudoers_file='/etc/sudoers.d/99-$USER-nopasswd'
+sudoers_file='/etc/sudoers.d/99-{{ .chezmoi.username }}-nopasswd'
 
-[tasks.setup]
-description = 'Setup'
+[tasks."setup-wsl"]
+description = 'WSL 環境のセットアップ'
 depends = [
-    "setup:*",
+    "setup-wsl:*",
 ]
 
 [tasks."disable-sudo-password"]
@@ -52,7 +52,7 @@ if [ -f "{{vars.sudoers_file}}" ]; then
 fi
 '''
 
-[tasks."setup:apt-packages"]
+[tasks."setup-wsl:apt-packages"]
 description = 'APT パッケージのインストール'
 hide = true
 depends = ["disable-sudo-password"]
@@ -95,7 +95,7 @@ if [ "$SHELL" != "$(command -v fish)" ]; then
 fi
 '''
 
-[tasks."setup:snap-packages"]
+[tasks."setup-wsl:snap-packages"]
 description = 'Snap パッケージのインストール'
 hide = true
 depends = ["disable-sudo-password"]
@@ -108,7 +108,7 @@ if ! command -v aws >/dev/null 2>&1; then
 fi
 '''
 
-[tasks."setup:mise-packages"]
+[tasks."setup-wsl:mise-packages"]
 description = 'mise パッケージのインストール'
 hide = true
 run = '''
@@ -118,7 +118,7 @@ set -euo pipefail
 mise install -y
 '''
 
-[tasks."setup:vscode-extensions"]
+[tasks."setup-wsl:vscode-extensions"]
 description = ' (vscode) VS Code 拡張機能のインストール'
 hide = true
 run = '''
