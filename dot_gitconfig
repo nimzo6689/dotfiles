@@ -1,17 +1,12 @@
 [user]
     name = nimzo6689
     email = 14356595+nimzo6689@users.noreply.github.com
-    signingkey = ~/.ssh/id_ed25519.pub
 [init]
     defaultBranch = main
 [core]
     editor = vim
     quotepath = false
     excludesfile = ~/.gitignore_global
-[gpg]
-    format = ssh
-[commit]
-    gpgsign = true
 [merge]
     conflictStyle = zdiff3
 [rebase]

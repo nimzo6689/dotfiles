@@ -2,23 +2,6 @@ set -g fish_greeting ""
 set -x EDITOR code
 
 # --------------------------------------
-# SSH Agent
-# --------------------------------------
-# すでに実行中の agent があれば再利用し、なければ起動する
-if not set -q SSH_AUTH_SOCK
-    set -l agent_file /tmp/ssh-agent.fish
-    if test -f $agent_file
-        source $agent_file > /dev/null
-    end
-
-    if not ps -p $SSH_AGENT_PID > /dev/null 2>&1
-        ssh-agent -c | sed 's/^setenv/set -xg/' > $agent_file
-        source $agent_file > /dev/null
-        ssh-add ~/.ssh/id_ed25519 2>/dev/null
-    end
-end
-
-# --------------------------------------
 # Interactive Shell Setup
 # --------------------------------------
 if status is-interactive
