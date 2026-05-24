@@ -64,3 +64,8 @@ if type -q eza
     alias ll='eza -l --icons --git'
     alias lla='eza -la --icons --git'
 end
+
+# Podman
+if type -q podman
+    alias docker='podman'
+end
