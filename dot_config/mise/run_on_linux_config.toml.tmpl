@@ -5,9 +5,7 @@ chezmoi = "latest"
 eza = "latest"
 fzf = "latest"
 gitleaks = "latest"
-go = "latest"
 jq = "latest"
-node = "lts"
 oh-my-posh = "latest"
 podman = "latest"
 ripgrep = "latest"
@@ -15,10 +13,10 @@ rust = "latest"
 usage = "latest"
 zoxide = "latest"
 
-[tasks."setup-wsl"]
+[tasks."setup"]
 description = 'WSL 環境のセットアップ'
 depends = [
-    "setup-wsl:*",
+    "setup:*",
 ]
 
 [tasks."disable-sudo-password"]
@@ -49,7 +47,7 @@ if [ -f "{{ .sudoers_file }}" ]; then
 fi
 '''
 
-[tasks."setup-wsl:apt-packages"]
+[tasks."setup:apt-packages"]
 description = 'APT パッケージのインストール'
 hide = true
 depends = ["disable-sudo-password"]
@@ -78,7 +76,7 @@ if [ "$SHELL" != "$(command -v fish)" ]; then
 fi
 '''
 
-[tasks."setup-wsl:snap-packages"]
+[tasks."setup:snap-packages"]
 description = 'Snap パッケージのインストール'
 hide = true
 depends = ["disable-sudo-password"]
@@ -91,7 +89,7 @@ if ! command -v aws >/dev/null 2>&1; then
 fi
 '''
 
-[tasks."setup-wsl:mise-packages"]
+[tasks."setup:mise-packages"]
 description = 'mise パッケージのインストール'
 hide = true
 run = '''
@@ -101,7 +99,7 @@ set -euo pipefail
 mise install -y
 '''
 
-[tasks."setup-wsl:vscode-extensions"]
+[tasks."setup:vscode-extensions"]
 description = ' (vscode) VS Code 拡張機能のインストール'
 hide = true
 run = '''

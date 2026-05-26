@@ -1,0 +1,67 @@
+[tools]
+# グローバルにインストールするツールは Scoop で管理
+
+[tasks."setup"]
+description = 'Windows 環境のセットアップ'
+depends = [
+    "setup:*",
+]
+
+[tasks."setup:scoop-packages"]
+description = 'Scoop パッケージのインストール'
+hide = true
+shell = 'powershell -NoProfile -ExecutionPolicy Bypass -Command'
+run = '''
+scoop bucket add extras
+scoop install aria2
+scoop config aria2-enabled true
+
+scoop install `
+    7zip `
+    aria2 `
+    aws `
+    dark `
+    git `
+    gsudo `
+    innounp `
+    less `
+    mise `
+    oh-my- `
+    rapidee `
+    sqlite `
+    tokei `
+    zoxide
+'''
+
+[tasks."setup:vscode-extensions"]
+description = ' (vscode) VS Code 拡張機能のインストール'
+hide = true
+shell = 'powershell -NoProfile -ExecutionPolicy Bypass -Command'
+run = '''
+$extensions = @(
+    "editorconfig.editorconfig",
+    "esbenp.prettier-vscode",
+    "ritwickdey.LiveServer",
+    "mhutchie.git-graph",
+    "ryu1kn.partial-diff",
+    "ms-vscode-remote.remote-wsl",
+    "ms-vscode-remote.remote-containers",
+    "PKief.material-icon-theme",
+)
+
+$codeCommand = Get-Command code -ErrorAction SilentlyContinue
+if (-not $codeCommand) {
+    $codeCommand = Get-Command code.cmd -ErrorAction SilentlyContinue
+}
+
+if ($codeCommand) {
+    $installedExts = & $codeCommand.Source --list-extensions
+    foreach ($ext in $extensions) {
+        if ($installedExts -notcontains $ext) {
+            & $codeCommand.Source --install-extension $ext --force
+        }
+    }
+} else {
+    Write-Output "code command が見つからないため、VS Code 拡張機能のインストールをスキップします。"
+}
+'''
