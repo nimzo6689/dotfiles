@@ -2,15 +2,12 @@
 
 set -euo pipefail
 
-export GITHUB_TOKEN="YOUR_GITHUB_TOKEN"
-GITHUB_USERNAME="YOUR_GITHUB_USERNAME"
-
-if [[ $GITHUB_TOKEN == "YOUR_GITHUB_TOKEN" ]]; then
+if [ -z $GITHUB_TOKEN ]; then
     echo "Please set your GitHub token in the script."
     exit 1
 fi
 
-if [[ $GITHUB_USERNAME == "YOUR_GITHUB_USERNAME" ]]; then
+if [ -z $GITHUB_USERNAME ]; then
     echo "Please set your GitHub username in the script."
     exit 1
 fi

@@ -4,15 +4,12 @@ if ($PSVersionTable.PSVersion.Major -ge 7) {
     $PSNativeCommandUseErrorActionPreference = $true
 }
 
-$env:GITHUB_TOKEN = 'YOUR_GITHUB_TOKEN'
-$env:GITHUB_USERNAME = 'YOUR_GITHUB_USERNAME'
-
-if ($env:GITHUB_TOKEN -eq 'YOUR_GITHUB_TOKEN') {
+if (-not $env:GITHUB_TOKEN) {
     Write-Error 'Please set your GitHub token in the script.'
     exit 1
 }
 
-if ($env:GITHUB_USERNAME -eq 'YOUR_GITHUB_USERNAME') {
+if (-not $env:GITHUB_USERNAME) {
     Write-Error 'Please set your GitHub username in the script.'
     exit 1
 }

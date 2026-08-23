@@ -1,8 +1,17 @@
 # dotfiles
 
-Chezmoi 用の dotfiles リポジトリです。  
+Chezmoi 用の dotfiles リポジトリです。
 
 ## Installation
+
+以下の環境変数を設定してから、以下のコマンドを実行してください。
+
+**GITHUB_TOKEN**  
+GitHubのレートリミットを回避するために、Personal Access Token（PAT）を設定してください。
+
+**GITHUB_USERNAME**
+GitHubのユーザー名を設定してください。
+このユーザー名は、chezmoi が GitHub から dotfiles を取得する際に使用されます。
 
 ### Windows
 
