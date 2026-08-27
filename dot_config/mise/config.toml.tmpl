@@ -1,3 +1,4 @@
+{{- if eq .chezmoi.os "linux" -}}
 [tools]
 aws-sam-cli = "latest"
 carapace = "latest"
@@ -13,3 +14,4 @@ ripgrep = "latest"
 rust = "latest"
 usage = "latest"
 zoxide = "latest"
+{{- end -}}
