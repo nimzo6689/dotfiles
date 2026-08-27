@@ -1,18 +1,16 @@
-#!/usr/bin/env bash
+#!/usr/bin/env nu
 
-set -euo pipefail
+const SCRIPT_NAME = "[GlobalHook:scan-credentials]"
 
-EXIT_SUCCESS=0
-EXIT_FAILURE=1
-SCRIPT_NAME="[GlobalHook:scan-credentials]"
+if (which gitleaks | is-not-empty) {
+    let result = (gitleaks git --staged --verbose | complete)
+    
+    if $result.exit_code != 0 {
+        print $"($SCRIPT_NAME) ERROR: 秘密情報の混入を検知しました。"
+        exit 1
+    }
+} else {
+    print $"($SCRIPT_NAME) WARNING: gitleaks がインストールされていないためスキップします。"
+}
 
-if command -v gitleaks &> /dev/null; then
-    if ! gitleaks git --staged --verbose; then
-        echo "${SCRIPT_NAME} ERROR: 秘密情報の混入を検知しました。"
-        exit ${EXIT_FAILURE}
-    fi
-else
-    echo "${SCRIPT_NAME} WARNING: gitleaks がインストールされていないためスキップします。"
-fi
-
-exit ${EXIT_SUCCESS}
+exit 0ss

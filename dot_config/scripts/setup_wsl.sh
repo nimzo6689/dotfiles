@@ -2,43 +2,27 @@
 
 set -euo pipefail
 
-if [ -z $GITHUB_TOKEN ]; then
-    echo "Please set your GitHub token in the script."
-    exit 1
+echo "=== Nu Shell のインストールを開始します ==="
+
+sudo mkdir -p /etc/apt/keyrings
+
+# https://www.nushell.sh/book/installation.html
+# 「For Debian & Ubuntu:」を参照。
+
+GPG_KEY=/etc/apt/keyrings/fury-nushell.gpg
+if [ ! -f "$GPG_KEY" ]; then
+    wget -qO- https://apt.fury.io/nushell/gpg.key | sudo gpg --yes --dearmor -o "$GPG_KEY"
+    DEB_LINE="deb [signed-by=$GPG_KEY] https://apt.fury.io/nushell/ /"
+    echo "$DEB_LINE" | sudo tee /etc/apt/sources.list.d/fury-nushell.list > /dev/null
 fi
+sudo apt update
+sudo apt install -y nushell
 
-if [ -z $GITHUB_USERNAME ]; then
-    echo "Please set your GitHub username in the script."
-    exit 1
-fi
+echo "=== Nu Shell のインストールが完了しました ==="
 
-# apt パッケージのセットアップ
-sudo apt update -y
-sudo apt upgrade -y
-sudo apt autoremove -y
-sudo apt autoclean -y
-sudo apt install -y \
-    software-properties-common \
-    gnupg2 \
-    build-essential \
-    unzip \
-    slirp4netns \
-    fuse-overlayfs \
-    uidmap
+# setup_wsl.nu の実行
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# mise のセットアップ
-if ! command -v mise >/dev/null 2>&1; then
-    sudo add-apt-repository -y ppa:jdxcode/mise
-    sudo apt update -y
-    sudo apt install -y mise
-fi
-
-eval "$(mise activate bash --shims)"
-
-# chezmoi のセットアップ
-mise use -g chezmoi@latest
-chezmoi init --apply --force "$GITHUB_USERNAME"
-
-# 各ツールのセットアップ
-mise run setup || true
-mise run enable-sudo-password
+echo "=== setup_wsl.nu を実行します ==="
+nu "${SCRIPT_DIR}/setup_wsl.nu"
+echo "=== setup_wsl.nu を実行しました ==="
