@@ -5,13 +5,8 @@
 use ($nu.default-config-dir | path join mise.nu)
 $env.PATH = ($env.PATH | prepend "~/.local/share/mise/shims")
 
-# oh-my-posh
-oh-my-posh init nu --config emodipt | save -f ~/.cache/oh-my-posh.nu
-source ~/.cache/oh-my-posh.nu
-
 # zoxide
-zoxide init nushell | save -f ~/.zoxide.nu
-source ~/.zoxide.nu
+source $"($nu.cache-dir)/zoxide.nu"
 
 # carapace
 source $"($nu.cache-dir)/carapace.nu"
