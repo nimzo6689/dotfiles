@@ -19,11 +19,6 @@ def --env mkcd [dir: string] {
     cd $dir
 }
 
-def --env reload [] {
-    source $nu.env-path
-    source $nu.config-path
-}
-
 # -------------------------
 # エイリアス設定
 # -------------------------

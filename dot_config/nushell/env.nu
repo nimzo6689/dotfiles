@@ -1,6 +1,14 @@
 $env.EDITOR = "vim"
 $env.config.show_banner = false
 
+mkdir $nu.cache-dir
+
+if $nu.is-login {
+    if pwd != $nu.home-dir {
+        cd $nu.home-dir
+    }
+}
+
 # -------------------------
 # 外部ツールの初期化
 # -------------------------
