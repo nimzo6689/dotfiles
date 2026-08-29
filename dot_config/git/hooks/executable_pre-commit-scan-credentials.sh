@@ -13,4 +13,4 @@ if (which gitleaks | is-not-empty) {
     print $"($SCRIPT_NAME) WARNING: gitleaks がインストールされていないためスキップします。"
 }
 
-exit 0ss
+exit 0

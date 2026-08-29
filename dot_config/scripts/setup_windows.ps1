@@ -94,7 +94,7 @@ function Initialize-Mise {
     if (-not (Get-Command mise -ErrorAction SilentlyContinue)) {
         scoop install mise
     }
-    Invoke-Expression (& mise activate pwsh --shims)
+    Invoke-Expression (& mise activate pwsh --shims | Out-String)
 }
 
 # --- メイン処理の実行 ---

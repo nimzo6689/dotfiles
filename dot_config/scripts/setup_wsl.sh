@@ -20,9 +20,9 @@ sudo apt install -y nushell
 
 echo "=== Nu Shell のインストールが完了しました ==="
 
-# setup_wsl.nu の実行
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
 echo "=== setup_wsl.nu を実行します ==="
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 nu "${SCRIPT_DIR}/setup_wsl.nu"
+
 echo "=== setup_wsl.nu を実行しました ==="
