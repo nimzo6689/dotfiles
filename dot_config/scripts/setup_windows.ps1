@@ -1,7 +1,32 @@
+#Requires -RunAsAdministrator
+#Requires -Version 5.1
+
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 if ($PSVersionTable.PSVersion.Major -ge 7) {
     $PSNativeCommandUseErrorActionPreference = $true
+}
+
+function Initialize-PCSettings {
+    # クリップボード履歴の有効化
+    Set-ItemProperty -Path "HKCU:\Software\Microsoft\Clipboard" `
+        -Name "EnableClipboardHistory" -Type DWord -Value 1
+
+    # 拡張子を表示する
+    Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" `
+        -Name "HideFileExt" -Type DWord -Value 0
+
+    # 長いパスの有効化
+    Set-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem' `
+        -Name 'LongPathsEnabled' -Value 1
+
+    # モニター ON/OFF
+    # 電源駆動（ac）のときは何もするな黄猿。
+    powercfg /X monitor-timeout-ac 0
+    powercfg /X standby-timeout-ac 0
+    # バッテリー駆動（dc）のときは 10 分で画面消して、60 分でスリープさせる。
+    powercfg /X monitor-timeout-dc 10
+    powercfg /X standby-timeout-dc 60
 }
 
 function Test-EnvironmentVariables {
@@ -30,6 +55,7 @@ function Install-ScoopPackages {
     # aria2 のインストールと有効化
     scoop install aria2
     scoop config aria2-enabled true
+    scoop config aria2-warning-enabled false
 
     # パッケージのまとめてインストール
     $scoopPackages = @(
@@ -76,7 +102,8 @@ function Install-VSCodeExtensions {
                 & $codeCommand.Source --install-extension $ext --force
             }
         }
-    } else {
+    }
+    else {
         Write-Output "code command が見つからないため、VS Code 拡張機能のインストールをスキップします。"
     }
 }
@@ -98,6 +125,7 @@ function Initialize-Mise {
 }
 
 # --- メイン処理の実行 ---
+Initialize-PCSettings
 Test-EnvironmentVariables
 Install-Scoop
 Install-ScoopPackages
