@@ -1,0 +1,127 @@
+{
+    "workbench.startupEditor": "none",
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": {
+            "path": [
+                "${env:ProgramFiles}\\PowerShell\\7\\pwsh.exe"
+            ],
+            "source": "PowerShell",
+            "icon": "terminal-powershell",
+            "args": [
+                "-NoLogo",
+                "-ExecutionPolicy",
+                "Bypass"
+            ]
+        },
+        "Command Prompt": {
+            "path": [
+                "${env:windir}\\Sysnative\\cmd.exe",
+                "${env:windir}\\System32\\cmd.exe"
+            ],
+            "args": [],
+            "icon": "terminal-cmd"
+        },
+        "Git Bash": {
+            "source": "Git Bash"
+        }
+    },
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "editor.fontFamily": "'CaskaydiaCove Nerd Font', Consolas, 'Courier New', monospace",
+    "editor.fontLigatures": true,
+    "security.workspace.trust.untrustedFiles": "open",
+    "powershell.powerShellAdditionalExePaths": {
+        "PowerShell7": "C:\\Program Files\\PowerShell\\7\\pwsh.exe"
+    },
+    "powershell.powerShellDefaultVersion": "PowerShell7",
+    "powershell.integratedConsole.suppressStartupBanner": true,
+    "dev.containers.executeInWSL": true,
+    "files.watcherExclude": {
+        "**/.bloop": true,
+        "**/.metals": true
+    },
+    "workbench.iconTheme": "material-icon-theme",
+    "[markdown]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "git.confirmSync": false,
+    "git.autofetch": true,
+    "extensions.ignoreRecommendations": true,
+    "liveServer.settings.donotShowInfoMsg": true,
+    "explorer.confirmDelete": false,
+    "git.openRepositoryInParentFolders": "never",
+    "aws.suppressPrompts": {
+        "yamlExtPrompt": true
+    },
+    "github.copilot.nextEditSuggestions.fixes": true,
+    "github.copilot.nextEditSuggestions.enabled": true,
+    "security.allowedUNCHosts": [
+        "wsl.localhost"
+    ],
+    "hediet.vscode-drawio.resizeImages": null,
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "explorer.confirmDragAndDrop": false,
+    "terminal.integrated.suggest.enabled": true,
+    "github.copilot.chat.localeOverride": "ja",
+    "chat.editing.confirmEditRequestRemoval": false,
+    "editor.aiStats.enabled": true,
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[css]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": true,
+        "scminput": false,
+        "go": false
+    },
+    "mise.binPath": "C:\\Users\\nimzo\\scoop\\shims\\mise.exe",
+    "aws.cloudformation.telemetry.enabled": true,
+    "[go]": {
+        "editor.insertSpaces": false,
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        }
+    },
+    "go.alternateTools": {
+        "go": "/home/nimzo/.local/share/mise/shims/go"
+    },
+    "terminal.integrated.initialHint": false,
+    "chat.viewSessions.orientation": "stacked",
+    "chat.tools.terminal.autoApprove": {
+        "npm install": true,
+        "go": true,
+    },
+    "files.associations": {
+        "*.tmpl": "toml"
+    },
+    "chat.tools.urls.autoApprove": {
+        "https://code.visualstudio.com": true,
+        "https://github.com/microsoft/vscode/wiki/*": true,
+        "https://mise.jdx.dev/tasks/toml-tasks.html": {
+            "approveRequest": false,
+            "approveResponse": true
+        }
+    },
+    "editor.minimap.enabled": false,
+    "zig.zls.enabled": "off",
+    "go.toolsManagement.autoUpdate": true,
+    "terminal.integrated.enableMultiLinePasteWarning": "never",
+}
