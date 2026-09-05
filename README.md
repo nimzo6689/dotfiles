@@ -22,7 +22,7 @@ PowerShell で以下のコマンドを実行してください。
 
 ```powershell
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-~./config/scripts/setup_windows.ps1
+irm https://raw.githubusercontent.com/nimzo6689/dotfiles/refs/heads/main/setup/windows.ps1 | iex
 ```
 
 ### WSL
@@ -30,6 +30,5 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 Ubuntu 22.04 LTS 以降を想定しています。
 
 ```
-cd ~
-/mnt/c/Users/$USER/.config/scripts/setup_wsl.sh
+curl -fsSL https://raw.githubusercontent.com/nimzo6689/dotfiles/refs/heads/main/setup/wsl.sh | bash
 ```
