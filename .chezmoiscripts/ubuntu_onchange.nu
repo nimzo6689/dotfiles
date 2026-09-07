@@ -4,12 +4,7 @@ const sudoers_file = "/etc/sudoers.d/99-nopasswd-wsl"
 
 def check-env [] {
     if ("GITHUB_TOKEN" not-in $env) or ($env.GITHUB_TOKEN | is-empty) {
-        print "Please set your GitHub token in the script."
-        exit 1
-    }
-
-    if ("GITHUB_USERNAME" not-in $env) or ($env.GITHUB_USERNAME | is-empty) {
-        print "Please set your GitHub username in the script."
+        print "Please set your GitHub token in the environment."
         exit 1
     }
 }
@@ -24,13 +19,28 @@ def disable-sudo-password [] {
     }
 }
 
+# パッケージがインストール済みかチェックするヘルパー
+def is-apt-installed [pkg: string] {
+    let res = (do { dpkg-query -W -f='${Status}' $pkg } | complete)
+    if $res.exit_code == 0 and ($res.stdout | str contains "install ok installed") {
+        true
+    } else {
+        false
+    }
+}
+
+# PPA が登録済みかチェックするヘルパー
+def is-ppa-added [ppa_name: string] {
+    let ppa_slug = ($ppa_name | str replace "ppa:" "" | str replace "/" "-")
+    let sources = (glob /etc/apt/sources.list.d/*.list | append /etc/apt/sources.list)
+    let found = ($sources | any {|f| (open --raw $f | str contains $ppa_slug) })
+    $found
+}
+
 def setup-apt-system-packages [] {
     disable-sudo-password
-    sudo apt update -y
-    sudo apt upgrade -y
-    sudo apt autoremove -y
-    sudo apt autoclean -y
-    sudo apt install -y ...[
+
+    let pkgs = [
         software-properties-common
         gnupg2
         build-essential
@@ -39,39 +49,63 @@ def setup-apt-system-packages [] {
         fuse-overlayfs
         uidmap
     ]
+
+    let missing = ($pkgs | filter {|p| not (is-apt-installed $p) })
+
+    if ($missing | is-not-empty) {
+        print $"Installing missing system packages: ($missing | str join ', ')..."
+        sudo apt-get update -y
+        sudo apt-get install -y ...$missing
+    } else {
+        print "System packages are already installed."
+    }
 }
 
 def setup-apt-packages [] {
     disable-sudo-password
 
-    sudo add-apt-repository -y ppa:git-core/ppa
-    sudo apt update
-    sudo apt install -y git
+    if not (is-ppa-added "ppa:git-core/ppa") {
+        print "Adding git-core PPA..."
+        sudo add-apt-repository -y ppa:git-core/ppa
+        sudo apt-get update -y
+    }
+
+    if not (is-apt-installed "git") {
+        sudo apt-get install -y git
+    } else {
+        print "git is already installed."
+    }
 }
 
 def setup-snap-packages [] {
     disable-sudo-password
 
     if (which aws | is-empty) {
+        print "Installing aws-cli via snap..."
         sudo snap install aws-cli --classic
+    } else {
+        print "aws-cli is already installed."
     }
 }
 
 def setup-mise [] {
     if (which mise | is-empty) {
-        sudo add-apt-repository -y ppa:jdxcode/mise
-        sudo apt update -y
-        sudo apt install -y mise
+        if not (is-ppa-added "ppa:jdxcode/mise") {
+            print "Adding jdxcode/mise PPA..."
+            sudo add-apt-repository -y ppa:jdxcode/mise
+            sudo apt-get update -y
+        }
+        sudo apt-get install -y mise
+    } else {
+        print "mise is already installed."
     }
 }
 
-def setup-chezmoi [] {
-    mise use -g chezmoi@latest
-    ~/.local/share/mise/shims/chezmoi init --apply --force $env.GITHUB_USERNAME
-}
-
 def setup-mise-packages [] {
-    mise install -y
+    if (which mise | is-not-empty) {
+        print "Running mise install..."
+        mise install -y
+    }
 }
 
 def setup-vscode-extensions [] {
@@ -82,11 +116,12 @@ def setup-vscode-extensions [] {
             "mhutchie.git-graph"
             "ryu1kn.partial-diff"
         ]
-        
+
         let installed_exts = (code --list-extensions | lines | str lowercase)
 
         for ext in $extensions {
             if ($ext | str lowercase) not-in $installed_exts {
+                print $"Installing VS Code extension: ($ext)..."
                 code --install-extension $ext --force
             }
         }
@@ -104,15 +139,17 @@ def change-login-shell [] {
     }
 
     # /etc/shells に Nushell のパスが含まれていない場合は追加
-    let shells = (open /etc/shells | lines)
+    let shells = (open /etc/shells | lines | str trim)
     if $nu_path not-in $shells {
         print $"Adding ($nu_path) to /etc/shells..."
         $"($nu_path)\n" | sudo tee -a /etc/shells | ignore
     }
 
-    # 現在のデフォルトシェルを取得して比較
-    let current_shell = $env.SHELL?
-    if $current_shell != $nu_path {
+    # getent を使って /etc/passwd から設定済みのデフォルトシェルを取得
+    let user_entry = (getent passwd $env.USER | split row ":")
+    let target_shell = ($user_entry | last)
+
+    if $target_shell != $nu_path {
         print $"Changing default shell to ($nu_path)..."
         sudo chsh -s $nu_path $env.USER
     } else {
@@ -123,18 +160,16 @@ def change-login-shell [] {
 def main [] {
     check-env
     print "Starting WSL setup..."
-        
+
     disable-sudo-password
     setup-apt-system-packages
 
     setup-apt-packages
     setup-mise
-    setup-chezmoi
     setup-mise-packages
     setup-snap-packages
     setup-vscode-extensions
     change-login-shell
-
 
     print "WSL setup completed!"
 }

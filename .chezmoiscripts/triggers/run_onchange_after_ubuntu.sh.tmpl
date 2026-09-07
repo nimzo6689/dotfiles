@@ -1,0 +1,4 @@
+{{ if eq .chezmoi.osRelease.id "ubuntu" -}}
+# chezmoi のソースディレクトリ内にあるスクリプトを呼び出す
+bash "{{ .chezmoi.sourceDir }}/.chezmoiscripts/ubuntu-onchange.sh"
+{{ end -}}

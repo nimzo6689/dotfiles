@@ -1,0 +1,6 @@
+{
+    // chezmoi のテンプレートファイルを適切に認識させるための設定
+    "files.associations": {
+        "*.toml.tmpl": "toml",
+    }
+}

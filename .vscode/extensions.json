@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "ms-vscode.powershell",
+        "ms-vscode-remote.remote-wsl",
+        "thenuprojectcontributors.vscode-nushell-lang",
+        "editorconfig.editorconfig",
+    ]
+}

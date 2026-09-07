@@ -1,0 +1,4 @@
+{{ if eq .chezmoi.os "windows" -}}
+# chezmoi のソースディレクトリ内にあるスクリプトを呼び出す
+& "{{ .chezmoi.sourceDir }}/.chezmoiscripts/windows-onchange.ps1"
+{{ end -}}

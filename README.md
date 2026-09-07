@@ -1,28 +1,29 @@
 # dotfiles
 
-Chezmoi 用の dotfiles リポジトリです。
+Chezmoi にて管理している dotfiles リポジトリです。  
+Windows11 と WSL2(Ubuntu) の両方で使用できるように設定されています。  
 
-## Installation
+## インストール方法
 
-以下の環境変数を設定してから、以下のコマンドを実行してください。
+Windows の環境変数にて以下を設定してから、後続の手順を実行してください。  
 
 **GITHUB_TOKEN**  
-GitHubのレートリミットを回避するために、Personal Access Token（PAT）を設定してください。
-
-**GITHUB_USERNAME**
-GitHubのユーザー名を設定してください。
-このユーザー名は、chezmoi が GitHub から dotfiles を取得する際に使用されます。
+GitHubのレートリミットを回避するために、Personal Access Token（PAT）を設定してください。  
+スコープ（権限）はすべて外したままで問題ありません。  
 
 **WSLENV**
-`GITHUB_TOKEN:GITHUB_USERNAME` を WSL 環境に渡すために、WSLENV 環境変数を設定してください。
+`GITHUB_TOKEN` を WSL 環境に渡すために、WSLENV 環境変数を設定してください。
 
 ### Windows
 
 PowerShell で以下のコマンドを実行してください。
 
 ```powershell
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-irm https://raw.githubusercontent.com/nimzo6689/dotfiles/refs/heads/main/setup/windows.ps1 | iex
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+iwr get.scoop.sh | iex
+scoop install git chezmoi
+
+chezmoi init --apply nimzo6689
 ```
 
 ### WSL
@@ -30,5 +31,10 @@ irm https://raw.githubusercontent.com/nimzo6689/dotfiles/refs/heads/main/setup/w
 Ubuntu 22.04 LTS 以降を想定しています。
 
 ```
-curl -fsSL https://raw.githubusercontent.com/nimzo6689/dotfiles/refs/heads/main/setup/wsl.sh | bash
+sudo apt install -y chezmoi
+chezmoi init --apply nimzo6689
 ```
+
+## ツールの選定理由
+
+[ADR](./docs/adr) を参照してください。

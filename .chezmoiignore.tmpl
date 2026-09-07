@@ -1,0 +1,14 @@
+README.md
+docs/*
+
+{{- if ne .chezmoi.os "windows" }}
+# Windows 以外（Linux / macOS など）で無視したいファイル
+AppData/
+Documents/
+{{- end }}
+
+{{- if ne .chezmoi.os "linux" }}
+# Linux 以外で無視したいファイル
+.vscode-server/
+dot_vscode-server/
+{{- end }}
