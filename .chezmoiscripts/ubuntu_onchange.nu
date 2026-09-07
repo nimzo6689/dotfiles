@@ -50,7 +50,7 @@ def setup-apt-system-packages [] {
         uidmap
     ]
 
-    let missing = ($pkgs | filter {|p| not (is-apt-installed $p) })
+    let missing = ($pkgs | where {|p| not (is-apt-installed $p) })
 
     if ($missing | is-not-empty) {
         print $"Installing missing system packages: ($missing | str join ', ')..."
