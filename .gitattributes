@@ -1,1 +1,5 @@
 * text=auto eol=lf
+
+*.sh.tmpl linguist-language=Shell
+*.nu.tmpl linguist-language=Nushell
+*.ps1.tmpl linguist-language=PowerShell
