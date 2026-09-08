@@ -1,0 +1,15 @@
+[wsl2]
+; リソース割り当て制限
+memory=8GB
+processors=4
+
+; Windowsとネットワークインターフェースを共有する
+networkingMode=mirrored
+; Windowsのプロキシ設定（PACファイルや自動検出含む）をWSLに自動反映
+autoProxy=true
+; DNSリクエストをWindows側にパススルー（VPN時の名前解決エラーを防止）
+dnsTunneling=true
+
+[experimental]
+; メモリの自動解放
+autoMemoryReclaim=dropcache
