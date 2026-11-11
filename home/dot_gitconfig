@@ -29,10 +29,10 @@
     autocorrect = 30
 [hook "scan-credentials"]
 	event = pre-commit
-	command = ~/.config/git/hooks/pre-commit-scan-credentials.sh
+	command = ~/.config/git/hooks/pre-commit-scan-credentials.nu
 [hook "check-large-files"]
 	event = pre-commit
-	command = ~/.config/git/hooks/pre-commit-check-large-files.sh
+	command = ~/.config/git/hooks/pre-commit-check-large-files.nu
 [hook "ensure-hook-installed"]
 	event = pre-commit
-	command = ~/.config/git/hooks/pre-commit-ensure-hook-installed.sh
+	command = ~/.config/git/hooks/pre-commit-ensure-hook-installed.nu
