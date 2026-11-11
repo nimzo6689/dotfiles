@@ -93,7 +93,8 @@ function Install-ScoopPackages {
         'rapidee',
         'sqlite',
         'tokei',
-        'zoxide'
+        'zoxide',
+        'nu'
     )
 
     $missingPackages = $scoopPackages | Where-Object { $installedScoopApps -notcontains $_ }
