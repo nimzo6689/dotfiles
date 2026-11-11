@@ -94,6 +94,7 @@ function Install-ScoopPackages {
         'sqlite',
         'tokei',
         'zoxide',
+        'pwsh',
         'nu'
     )
 
