@@ -95,7 +95,9 @@ function Install-ScoopPackages {
         'tokei',
         'zoxide',
         'pwsh',
-        'nu'
+        'nu',
+        'vcredist2022',
+        'nerd-fonts/CascadiaCode-NF'
     )
 
     $missingPackages = $scoopPackages | Where-Object { $installedScoopApps -notcontains $_ }
@@ -106,6 +108,8 @@ function Install-ScoopPackages {
     } else {
         Write-Host "All Scoop packages are already installed."
     }
+
+    scoop uninstall vcredist2022
 }
 
 function Install-VSCodeExtensions {
